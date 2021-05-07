@@ -228,6 +228,13 @@ ul{
     }
   }
 }
+.sr-only{
+    visibility: hidden !important;
+}
+.imgslider{
+    width: 100%;
+    height: 100vh;
+}
 
 .credits{
   display: table;

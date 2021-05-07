@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Carousel } from 'react-bootstrap';
-import { fetchMovies, fetchGenre } from '../services/myservices';
+import { fetchMovies, fetchGenre, fetchTopratedMovie } from '../services/myservices';
 
 
 
@@ -10,14 +10,15 @@ function Home(props) {
 
     const [nowPlaying, setNowplaying] = useState([]);
     const [genre, setGenre] = useState([]);
+    const [topRated, setTopRated] = useState([]);
 
     useEffect(() => {
         const fetchAPI = async () => {
             setNowplaying(await fetchMovies());
             setGenre(await fetchGenre());
+            setTopRated(await fetchTopratedMovie());
         }
         fetchAPI();
-        console.log(nowPlaying);
     }, []);
 
     const managedslider = nowPlaying.slice(10, 15).map((item, index) => {
@@ -25,7 +26,7 @@ function Home(props) {
 
             <Carousel.Item interval={5000} key={index}>
                 <img
-                    className="d-block w-100"
+                    className="d-block imgslider"
                     src={item.backPoster}
                     alt={item.title}
                 />
@@ -39,47 +40,49 @@ function Home(props) {
 
     })
 
-    const managedcard = () => {
+    const managedcard = topRated.map((item, index) => {
         return (
-            <ul>
-                <li className="booking-card" >
-                    <div className="book-container">
-                        <div className="content">
-                            <button className="btn">REGARDER</button>
-                        </div>
+
+            <li className="booking-card" key={index} style={{backgroundImage:`url(${item.backPoster})`}}>
+                <div className="book-container">
+                    <div className="content">
+                        <button className="btn">REGARDER</button>
                     </div>
-                    <div className="informations-container">
-                        <h2 className="title">Je suis un billet pour aller visiter un truc</h2>
-                        <p className="sub-title">Et moi un je suis sous-titre</p>
-                        <p className="price">De 0 à 15 €</p>
-                        <div className="more-information">
-                            <div className="info-and-date-container">
-                                <div className="box info">
+                </div>
+                <div className="informations-container">
+                    <h2 className="title">{item.title}</h2>
+                    <p className="sub-title">{item.overview.slice(0, 50)}</p>
+                    <p className="price">{item.rating}</p>
+                    <div className="more-information">
+                        <div className="info-and-date-container">
+                            <div className="box info">
 
-                                    <p>Parc des expositions à NANTES</p>
-                                </div>
-                                <div className="box date">
-
-                                    <p>Samedi 1er février 2020</p>
-                                </div>
+                                <p>{item.popularity}</p>
                             </div>
-                            <p className="disclaimer">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quasi eveniet perferendis culpa. Expedita architecto nesciunt, rem distinctio</p>
+                            <div className="box date">
+
+                                <p>{item.}</p>
+                            </div>
                         </div>
+                        <p className="disclaimer">{item.overview}</p>
                     </div>
-                </li>
-            </ul>
+                </div>
+            </li>
+            
         )
-    }
-    return (
-        <div>
-            <Carousel>
-                {managedslider}
-            </Carousel>
+})
+return (
+    <div>
+        <Carousel>
+            {managedslider}
+        </Carousel>
 
             card
-            {managedcard()}
-        </div>
-    );
+        <ul>
+            {managedcard}
+        </ul>
+    </div>
+);
 }
 
 export default Home;

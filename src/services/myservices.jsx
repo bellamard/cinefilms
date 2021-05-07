@@ -116,6 +116,7 @@ export const fetchTopratedMovie = async () => {
         }))
 
         return modifiedData;
+        console.log(modifiedData);
     } catch (error) {
 
     }
