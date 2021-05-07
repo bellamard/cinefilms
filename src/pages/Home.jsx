@@ -1,19 +1,44 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Carousel } from 'react-bootstrap';
+import { fetchMovies, fetchGenre } from '../services/myservices';
 
 
 
 
 function Home(props) {
 
-    
-    const managedslider = () => {
-    return (
-        
+    const [nowPlaying, setNowplaying] = useState([]);
+    const [genre, setGenre] = useState([]);
 
-    )
-}
+    useEffect(() => {
+        const fetchAPI = async () => {
+            setNowplaying(await fetchMovies());
+            setGenre(await fetchGenre());
+        }
+        fetchAPI();
+        console.log(nowPlaying);
+    }, []);
+
+    const managedslider = nowPlaying.slice(10, 15).map((item, index) => {
+        return (
+
+            <Carousel.Item interval={5000} key={index}>
+                <img
+                    className="d-block w-100"
+                    src={item.backPoster}
+                    alt={item.title}
+                />
+                <Carousel.Caption>
+                    <h3>{item.title}</h3>
+                    <p>{item.overview.slice(0, 150)}</p>
+                </Carousel.Caption>
+            </Carousel.Item>
+
+        )
+
+    })
+
     const managedcard = () => {
         return (
             <ul>
@@ -47,7 +72,10 @@ function Home(props) {
     }
     return (
         <div>
-            {managedslider()}
+            <Carousel>
+                {managedslider}
+            </Carousel>
+
             card
             {managedcard()}
         </div>
