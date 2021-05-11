@@ -259,8 +259,14 @@ ul {
   align-items: center;
   text-align: center;
 }
-footer{
+
   .rx{
+    padding-left: 150px;
+    padding-right: 150px;
     color:#7d7d7d;
+    font-size: 4rem;
+    display: flex;
+    justify-content: space-between;
+
   }
-}
+
