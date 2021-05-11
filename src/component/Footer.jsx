@@ -4,7 +4,8 @@ function Footer(props) {
     return (
         <div className='container-fluid'>
             <div className='rx'>
-                <i class="fas fa-user"></i>
+                <i className="fab fa-facebook-square"></i>
+                
             </div>
             
         </div>
