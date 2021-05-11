@@ -95,13 +95,13 @@ export const fetchPersons = async () => {
     } catch (error) { }
 }
 
-export const fetchTopratedMovie = async () => {
+export const fetchTopratedMovie = async (page_id) => {
     try {
         const { data } = await axios.get(topratedUrl, {
             params: {
                 api_key: apiKey,
                 language: 'fr_FR',
-                page: 1
+                page: page_id
             }
         })
         const posterUrl = 'https://image.tmdb.org/t/p/original/';
@@ -116,7 +116,23 @@ export const fetchTopratedMovie = async () => {
         }))
 
         return modifiedData;
-        console.log(modifiedData);
+    } catch (error) {
+
+    }
+}
+export const numberpagetop = async () => {
+    try {
+        const { data } = await axios.get(topratedUrl, {
+            params: {
+                api_key: apiKey,
+                language: 'fr_FR',
+                
+            }
+        })        
+        const totalpage = data['total_pages'];      
+
+        return totalpage;
+
     } catch (error) {
 
     }

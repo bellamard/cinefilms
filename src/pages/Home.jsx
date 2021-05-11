@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Carousel } from 'react-bootstrap';
-import { fetchMovies, fetchGenre, fetchTopratedMovie } from '../services/myservices';
+import { fetchMovies, fetchGenre, fetchTopratedMovie, numberpagetop } from '../services/myservices';
 
 
 
@@ -11,17 +11,38 @@ function Home(props) {
     const [nowPlaying, setNowplaying] = useState([]);
     const [genre, setGenre] = useState([]);
     const [topRated, setTopRated] = useState([]);
+    const [pageid, setPageid] = useState(1);
+    const [numberpage, setNumberpage] = useState(0);
 
     useEffect(() => {
         const fetchAPI = async () => {
             setNowplaying(await fetchMovies());
             setGenre(await fetchGenre());
-            setTopRated(await fetchTopratedMovie());
+            setTopRated(await fetchTopratedMovie(pageid));
+            setNumberpage(await numberpagetop());
         }
         fetchAPI();
+
     }, []);
 
-    const managedslider = nowPlaying.slice(10, 15).map((item, index) => {
+    const incrementpage = async() => {
+        if (pageid < numberpage) {
+            setPageid(pageid + 1)
+            setTopRated(await fetchTopratedMovie(pageid));
+            console.log(pageid);
+        }
+    }
+
+    const decrementpage = async() => {
+        if (pageid > 1) {
+            setPageid(pageid - 1);
+            setTopRated(await fetchTopratedMovie(pageid));
+            console.log(pageid);
+
+        }
+    }
+
+    const managedslider = nowPlaying.slice(5, 10).map((item, index) => {
         return (
 
             <Carousel.Item interval={5000} key={index}>
@@ -43,7 +64,7 @@ function Home(props) {
     const managedcard = topRated.map((item, index) => {
         return (
 
-            <li className="booking-card" key={index} style={{backgroundImage:`url(${item.backPoster})`}}>
+            <li className="booking-card" key={index} style={{ backgroundImage: `url(${item.backPoster})` }}>
                 <div className="book-container">
                     <div className="content">
                         <button className="btn">REGARDER</button>
@@ -56,33 +77,46 @@ function Home(props) {
                     <div className="more-information">
                         <div className="info-and-date-container">
                             <div className="box info">
-
-                                <p>{item.popularity}</p>
+                                
+                                <h3>{item.popularity}</h3>
                             </div>
-                            <div className="box date">
-
-                                <p>{item.}</p>
-                            </div>
+                           
                         </div>
                         <p className="disclaimer">{item.overview}</p>
                     </div>
                 </div>
             </li>
-            
-        )
-})
-return (
-    <div>
-        <Carousel>
-            {managedslider}
-        </Carousel>
 
-            card
-        <ul>
-            {managedcard}
-        </ul>
-    </div>
-);
+        )
+    });
+
+    
+
+    
+
+    return (
+        <div>
+
+            <Carousel>
+                {managedslider}
+            </Carousel>
+
+
+
+            <ul>
+
+                {managedcard}
+            </ul>
+            <div >
+                <button onClick={incrementpage}>page + {pageid}</button>
+                <h2>{numberpage}</h2>
+                 <button onClick={decrementpage}>page -</button>
+                
+            </div>
+
+
+        </div>
+    );
 }
 
 export default Home;
