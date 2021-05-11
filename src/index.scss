@@ -250,3 +250,17 @@ ul {
         color: $blue2;
     }
 }
+.paging{
+  display: flex;
+  color: #e3ebf1;
+  justify-content: center;
+}
+.pageid{
+  align-items: center;
+  text-align: center;
+}
+footer{
+  .rx{
+    color:#7d7d7d;
+  }
+}

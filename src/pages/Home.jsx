@@ -25,7 +25,7 @@ function Home(props) {
 
     }, []);
 
-    const incrementpage = async() => {
+    const incrementpage = async () => {
         if (pageid < numberpage) {
             setPageid(pageid + 1)
             setTopRated(await fetchTopratedMovie(pageid));
@@ -33,7 +33,7 @@ function Home(props) {
         }
     }
 
-    const decrementpage = async() => {
+    const decrementpage = async () => {
         if (pageid > 1) {
             setPageid(pageid - 1);
             setTopRated(await fetchTopratedMovie(pageid));
@@ -77,10 +77,10 @@ function Home(props) {
                     <div className="more-information">
                         <div className="info-and-date-container">
                             <div className="box info">
-                                
+
                                 <h3>{item.popularity}</h3>
                             </div>
-                           
+
                         </div>
                         <p className="disclaimer">{item.overview}</p>
                     </div>
@@ -90,9 +90,9 @@ function Home(props) {
         )
     });
 
-    
 
-    
+
+
 
     return (
         <div>
@@ -107,11 +107,16 @@ function Home(props) {
 
                 {managedcard}
             </ul>
-            <div >
-                <button onClick={incrementpage}>page + {pageid}</button>
-                <h2>{numberpage}</h2>
-                 <button onClick={decrementpage}>page -</button>
-                
+            <div class='paging'>
+                <button onClick={decrementpage}>-</button>
+                <div className='pageid'>
+                    <span>Page:</span>
+                    <h3>{pageid}</h3>
+                    
+                </div>
+
+                <button onClick={incrementpage}>+</button>
+
             </div>
 
 
