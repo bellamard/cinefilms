@@ -202,14 +202,14 @@ export const fetchSimilarMovie = async (id) => {
     } catch (error) { }
 }
 
-export const fetchResearch = async (name) => {
+export const fetchResearch = async (movie) => {
 
     try {
         const { data } = await axios.get(researchUrl, {
             params: {
                 api_key: apiKey,
-                query: name,
-                page: 1
+                query: movie
+                
             }
         });
         const posterUrl = 'https://image.tmdb.org/t/p/original/';
@@ -217,6 +217,8 @@ export const fetchResearch = async (name) => {
             id: m['id'],
             backPoster: posterUrl + m['backdrop_path'],
             title: m['title'],
+            date: m['release_date'],
+            overview: m['overview']
 
         }))
         return modifiedData;

@@ -6,9 +6,9 @@ function Navbar(props) {
      let history = useHistory();
     const handleSubmit = (e) => {
         e.preventDefault();
-        props.researchMovie(movie);
+        props.researchMovie(movie);        
         history.push("/Research/"+movie);
-        
+        setMovie('');        
     }
     const handleChange = e => { setMovie(e.target.value) };
     return (
