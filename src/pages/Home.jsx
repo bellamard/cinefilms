@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Carousel } from 'react-bootstrap';
 import { fetchMovies, fetchGenre, fetchTopratedMovie, numberpagetop } from '../services/myservices';
+import { Link } from 'react-router-dom';
 
 
 
@@ -99,6 +100,7 @@ function Home(props) {
 
             <Carousel>
                 {managedslider}
+                
             </Carousel>
 
 
