@@ -1,7 +1,16 @@
-import React from 'react';
-import { Link } from "react-router-dom";
+import React, { useState } from 'react';
+import { Link, useHistory} from "react-router-dom";
 
 function Navbar(props) {
+    const [movie, setMovie] = useState('');
+     let history = useHistory();
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        props.researchMovie(movie);
+        history.push("/Research/"+movie);
+        
+    }
+    const handleChange = e => { setMovie(e.target.value) };
     return (
         <nav className='navbar navbar-expand-lg navbar-light bg-light'>
             <div className="container-fluid">
@@ -10,8 +19,8 @@ function Navbar(props) {
                 </div>
                 <div>
                     <div>
-                        <form action='' onSubmit className="d-flex">
-                            <input type='text' placeholder='Recherche' className="form-control me-2" />
+                        <form action='' onSubmit={handleSubmit} className="d-flex">
+                            <input type='text' placeholder='Recherche' className="form-control me-2" value={movie} onChange={handleChange} />
                         </form>
                     </div>
                 </div>

@@ -109,7 +109,7 @@ function Home(props) {
 
                 {managedcard}
             </ul>
-            <div class='paging'>
+            <div className='paging'>
                 <button onClick={decrementpage}>-</button>
                 <div className='pageid'>
                     <span>Page:</span>

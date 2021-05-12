@@ -126,10 +126,10 @@ export const numberpagetop = async () => {
             params: {
                 api_key: apiKey,
                 language: 'fr_FR',
-                
+
             }
-        })        
-        const totalpage = data['total_pages'];      
+        })
+        const totalpage = data['total_pages'];
 
         return totalpage;
 
@@ -203,24 +203,26 @@ export const fetchSimilarMovie = async (id) => {
 }
 
 export const fetchResearch = async (name) => {
-    const { data } = await axios.get(researchUrl, {
-        params: {
-            api_key: apiKey,
-            query: name,
-            page: 1
-        }
-    });
-    const posterUrl = 'https://image.tmdb.org/t/p/original/';
-    const modifiedData = data['results'].map((m) => ({
-        id: m['id'],
-        backPoster: posterUrl + m['backdrop_path'],
-        popularity: m['popularith'],
-        title: m['original_title'],
-        poster: posterUrl + m['poster_path'],
-        overview: m['overview'],
-        rating: m['vote_average']
 
-    }))
+    try {
+        const { data } = await axios.get(researchUrl, {
+            params: {
+                api_key: apiKey,
+                query: name,
+                page: 1
+            }
+        });
+        const posterUrl = 'https://image.tmdb.org/t/p/original/';
+        const modifiedData = data['results'].map((m) => ({
+            id: m['id'],
+            backPoster: posterUrl + m['backdrop_path'],
+            title: m['title'],
+
+        }))
+        return modifiedData;
+    } catch (error) {
+
+    }
 
 
 }
