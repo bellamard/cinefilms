@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Carousel } from 'react-bootstrap';
-import { fetchMovies, fetchGenre, fetchTopratedMovie, numberpagetop, fetchMovieByGenre } from '../services/myservices';
+import { fetchMovies, fetchGenre, fetchTopratedMovie, numberpagetop, numberpagegenre, fetchMovieByGenre } from '../services/myservices';
 import { Link } from 'react-router-dom';
 
 
@@ -14,7 +14,8 @@ function Home(props) {
     const [topRated, setTopRated] = useState([]);
     const [pageid, setPageid] = useState(1);
     const [numberpage, setNumberpage] = useState(0);
-    const [titlemovie, setTitlemovie]=useState('TOP Films')
+    const [titlemovie, setTitlemovie] = useState('TOP Films');
+    const [codegenre, setCodegenre] = useState('');
 
     useEffect(() => {
         const fetchAPI = async () => {
@@ -25,21 +26,31 @@ function Home(props) {
         }
         fetchAPI();
 
-    }, []);
+    }, [topRated, titlemovie, pageid]);
 
     const incrementpage = async () => {
         if (pageid < numberpage) {
             setPageid(pageid + 1)
-            setTopRated(await fetchTopratedMovie(pageid));
-            
+            if (titlemovie === 'TOP Films') {
+                setTopRated(await fetchTopratedMovie(pageid));
+            } else {
+                setTopRated(await fetchMovieByGenre(codegenre, pageid));
+                 console.log(topRated);
+            }
+
+
         }
     }
 
     const decrementpage = async () => {
         if (pageid > 1) {
             setPageid(pageid - 1);
-            setTopRated(await fetchTopratedMovie(pageid));
-            console.log(pageid);
+            if (titlemovie === 'TOP Films') {
+                setTopRated(await fetchTopratedMovie(pageid));
+            } else {
+                setTopRated(await fetchMovieByGenre(codegenre, pageid));
+                console.log(topRated);
+            }
 
         }
     }
@@ -79,9 +90,11 @@ function Home(props) {
         )
     });
     const handleGenreClick = async (genre_id, genre_name) => {
-        setTopRated(await fetchMovieByGenre(genre_id));
+        setTopRated(await fetchMovieByGenre(genre_id, 1));
         setTitlemovie(genre_name);
-        console.log(topRated);
+        setNumberpage(await numberpagegenre(genre_id));
+        setCodegenre(genre_id);
+        setPageid(1);
     };
     const mangedgenre = genre.map((item, index) => {
         return (
@@ -90,7 +103,7 @@ function Home(props) {
                     type="button"
                     className="btn btn-outline-info"
                     onClick={() => {
-                        handleGenreClick(item.id,item.name);
+                        handleGenreClick(item.id, item.name);
                     }}
                 >
                     {item.name}
@@ -120,14 +133,14 @@ function Home(props) {
 
 
             <div className='paging'>
-                <button onClick={decrementpage}>-</button>
+                <button onClick={decrementpage} className='btn btn-outline-info mx-2'>-</button>
                 <div className='pageid'>
                     <span>Page:</span>
                     <h3>{pageid}</h3>
 
                 </div>
 
-                <button onClick={incrementpage}>+</button>
+                <button onClick={incrementpage} className='btn btn-outline-info mx-2'>+</button>
 
             </div>
 

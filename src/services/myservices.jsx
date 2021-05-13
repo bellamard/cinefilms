@@ -41,7 +41,7 @@ export const fetchGenre = async () => {
             params: {
                 api_key: apiKey,
                 language: 'fr_FR',
-                page: 1
+                
             }
         })
         const modifiedData = data['genres'].map((g) => ({
@@ -58,7 +58,6 @@ export const fetchMovieByGenre = async (genre_id) => {
             params: {
                 api_key: apiKey,
                 language: 'fr_FR',
-                page: 1,
                 with_genres: genre_id
             }
         })
@@ -126,6 +125,25 @@ export const numberpagetop = async () => {
             params: {
                 api_key: apiKey,
                 language: 'fr_FR',
+
+            }
+        })
+        const totalpage = data['total_pages'];
+
+        return totalpage;
+
+    } catch (error) {
+
+    }
+}
+export const numberpagegenre = async (genre_id,pages) => {
+    try {
+        const { data } = await axios.get(topratedUrl, {
+            params: {
+                api_key: apiKey,
+                language: 'fr_FR',
+                with_genres: genre_id,
+                page:pages
 
             }
         })
