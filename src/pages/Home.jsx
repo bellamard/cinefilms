@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Carousel } from 'react-bootstrap';
-import { fetchMovies, fetchGenre, fetchTopratedMovie, numberpagetop } from '../services/myservices';
+import { fetchMovies, fetchGenre, fetchTopratedMovie, numberpagetop, fetchMovieByGenre } from '../services/myservices';
 import { Link } from 'react-router-dom';
 
 
@@ -14,6 +14,7 @@ function Home(props) {
     const [topRated, setTopRated] = useState([]);
     const [pageid, setPageid] = useState(1);
     const [numberpage, setNumberpage] = useState(0);
+    const [titlemovie, setTitlemovie]=useState('TOP Films')
 
     useEffect(() => {
         const fetchAPI = async () => {
@@ -30,7 +31,7 @@ function Home(props) {
         if (pageid < numberpage) {
             setPageid(pageid + 1)
             setTopRated(await fetchTopratedMovie(pageid));
-            console.log(pageid);
+            
         }
     }
 
@@ -65,31 +66,38 @@ function Home(props) {
     const managedcard = topRated.map((item, index) => {
         return (
 
-            <li className="booking-card" key={index} style={{ backgroundImage: `url(${item.backPoster})` }}>
-                <div className="book-container">
-                    <div className="content">
-                        <button className="btn">REGARDER</button>
-                    </div>
+            <div className="card" key={index}>
+                <img src={item.backPoster} alt={item.title} />
+                <div className="descriptions">
+                    <h3>{item.title}</h3>
+                    <p>
+                        {item.overview}
+                    </p>
                 </div>
-                <div className="informations-container">
-                    <h2 className="title">{item.title}</h2>
-                    <p className="sub-title">{item.overview.slice(0, 50)}</p>
-                    <p className="price">{item.rating}</p>
-                    <div className="more-information">
-                        <div className="info-and-date-container">
-                            <div className="box info">
-
-                                <h3>{item.popularity}</h3>
-                            </div>
-
-                        </div>
-                        <p className="disclaimer">{item.overview}</p>
-                    </div>
-                </div>
-            </li>
+            </div>
 
         )
     });
+    const handleGenreClick = async (genre_id, genre_name) => {
+        setTopRated(await fetchMovieByGenre(genre_id));
+        setTitlemovie(genre_name);
+        console.log(topRated);
+    };
+    const mangedgenre = genre.map((item, index) => {
+        return (
+            <li className="list-inline-item my-1" key={index}>
+                <button
+                    type="button"
+                    className="btn btn-outline-info"
+                    onClick={() => {
+                        handleGenreClick(item.id,item.name);
+                    }}
+                >
+                    {item.name}
+                </button>
+            </li>
+        )
+    })
 
 
 
@@ -100,21 +108,23 @@ function Home(props) {
 
             <Carousel>
                 {managedslider}
-                
+
             </Carousel>
-
-
-
-            <ul>
-
-                {managedcard}
+            <ul className='my-2'>
+                {mangedgenre}
             </ul>
+            <h3 className='text-white mx-5'>{titlemovie}</h3>
+            <div className="listresearch px-5">
+                {managedcard}
+            </div>
+
+
             <div className='paging'>
                 <button onClick={decrementpage}>-</button>
                 <div className='pageid'>
                     <span>Page:</span>
                     <h3>{pageid}</h3>
-                    
+
                 </div>
 
                 <button onClick={incrementpage}>+</button>

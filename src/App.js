@@ -27,6 +27,7 @@ function App() {
           <Route exact path="/" component={Home} />
           <Route path="/Movie" component={MovieDetail} />
           <Route path="/Research/:search" component={Research} />
+          <Research id={search}/>
         </Switch>
         <Footer />
       </Router>

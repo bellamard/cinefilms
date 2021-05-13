@@ -7,23 +7,25 @@ function Research(props) {
     
     useEffect(() => {
         const fetchRes = async () => {
+            setResearch(props.match.params.search);
             setListsearch(await fetchResearch(research));
         }
         fetchRes();
-    }, []);
+    }, [listsearch]);
 
-
+    console.log(listsearch);
     const listMovie = listsearch.map((item, index) => {
         return (
-            <div className="col" key={index}>
-                <div className="card h-100">
-                    <img src={item.backPoster} className="card-img-top" alt={item.title} />
-                    <div className="card-body">
-                        <h5 className="card-title">{item.title}</h5>
-                        <p className="card-text">{item.overview.slice(0, 100)}</p>
-                    </div>
-                </div>
+            
+            <div className="card" key={index}>
+            <img src={item.backPoster} alt={item.title}/>
+            <div className="descriptions">
+                <h3>{item.title}</h3>
+                <p>
+                    {item.overview}
+                </p>                
             </div>
+        </div>
 
 
         )
@@ -32,8 +34,8 @@ function Research(props) {
 
     return (
         <div>
-            <h3 className='text-white'>Resultat de Recherche</h3>
-            <div className="row row-cols-1 row-cols-md-3 g-4">
+            <h3 className='text-white mx-5'>Resultat de Recherche</h3>
+            <div className="listresearch px-5">
                 {listMovie}
             </div>
             <Link to="/" className='lien'>retour</Link>
