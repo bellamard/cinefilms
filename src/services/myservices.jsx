@@ -52,13 +52,15 @@ export const fetchGenre = async () => {
     } catch (error) { }
 }
 
-export const fetchMovieByGenre = async (genre_id) => {
+export const fetchMovieByGenre = async (genre_id, numberpage) => {
     try {
         const { data } = await axios.get(moviesUrl, {
             params: {
                 api_key: apiKey,
                 language: 'fr_FR',
-                with_genres: genre_id
+                with_genres: genre_id,
+                page:numberpage
+
             }
         })
         const posterUrl = 'https://image.tmdb.org/t/p/original/';

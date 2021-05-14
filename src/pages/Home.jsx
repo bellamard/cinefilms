@@ -26,7 +26,7 @@ function Home(props) {
         }
         fetchAPI();
 
-    }, [topRated, titlemovie, pageid]);
+    }, []);
 
     const incrementpage = async () => {
         if (pageid < numberpage) {
@@ -95,6 +95,7 @@ function Home(props) {
         setNumberpage(await numberpagegenre(genre_id));
         setCodegenre(genre_id);
         setPageid(1);
+        
     };
     const mangedgenre = genre.map((item, index) => {
         return (
@@ -119,7 +120,7 @@ function Home(props) {
     return (
         <div>
 
-            <Carousel>
+            <Carousel fade={true}>
                 {managedslider}
 
             </Carousel>

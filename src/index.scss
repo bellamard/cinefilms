@@ -323,7 +323,7 @@ ul {
         flex: 1;
         flex-basis: 300px;
         flex-grow: 0;
-        height: 440px;
+        height: 350px;
         background: #fff;
         border: 2px solid #fff;
         box-shadow: 0 4px 7px rgba(0, 0, 0, 0.5);
@@ -363,31 +363,11 @@ ul {
             transform: scale(1.6) rotate(20deg);
             filter: blur(3px);
         }
-        & h1 {
-            color: #ff3838;
-            letter-spacing: 1px;
-            margin: 0;
-        }
+       
         & p {
             line-height: 24px;
             height: 70%;
         }
-        & button {
-            width: fit-content;
-            height: 40px;
-            cursor: pointer;
-            border-style: none;
-            background-color: #ff3838;
-            color: #fff;
-            font-size: 15px;
-            outline: none;
-            box-shadow: 0 2px 3px rgba(0, 0, 0, 0.4);
-            transition: all 0.5s ease-in-out;
-        }
-        & button:hover {
-            transform: scale(0.95) translateX(-5px);
-            transition: all 0.5s ease-in-out;
-        }
-
+        
     }
 }
