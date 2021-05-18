@@ -2,31 +2,30 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom'
 import { fetchResearch } from '../services/myservices';
 function Research(props) {
-    const [research, setResearch] = useState(props.match.params.search);
-    const [listsearch, setListsearch] = useState([]);
-    
+    let params=props.match.params.search
+    const [listSearch, setListSearch] = useState([]);
+
     useEffect(() => {
         const fetchRes = async () => {
-            setResearch(props.match.params.search);
-            setListsearch(await fetchResearch(research));
+            
+            setListSearch(await fetchResearch(params));
         }
         fetchRes();
-    }, [listsearch]);
+    }, [params]);
 
-    console.log(listsearch);
-    const listMovie = listsearch.map((item, index) => {
+    const listMovie = listSearch.map((movie, key) => {
         return (
-            
-            <div className="card" key={index}>
-            <img src={item.backPoster} alt={item.title}/>
-            <div className="descriptions">
-                <h3>{item.title}</h3>
-                <p>
-                    {item.overview}
-                </p>                
-            </div>
-        </div>
-
+            <Link to={`../detail/${movie.id}`} className="cardbox">
+                <div className="card" key={key}>
+                    <img src={movie.backPoster} alt={movie.title} />
+                    <div className="descriptions">
+                        <h3>{movie.title}</h3>
+                        <p>
+                            {movie.overview}
+                        </p>
+                    </div>
+                </div>
+            </Link>
 
         )
     })
@@ -38,7 +37,7 @@ function Research(props) {
             <div className="listresearch px-5">
                 {listMovie}
             </div>
-            <Link to="/" className='lien'>retour</Link>
+            <Link to="/" className='btn btn-outline-info mx-2'>retour</Link>
         </div>
     );
 }

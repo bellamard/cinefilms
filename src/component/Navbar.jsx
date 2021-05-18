@@ -4,13 +4,12 @@ import { Link, useHistory} from "react-router-dom";
 function Navbar(props) {
     const [movie, setMovie] = useState('');
      let history = useHistory();
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        props.researchMovie(movie);        
+    const handleSubmit = (event) => {
+        event.preventDefault();      
         history.push("/Research/"+movie);
-        setMovie('');        
+        setMovie('');
     }
-    const handleChange = e => { setMovie(e.target.value) };
+    const handleChange = event => { setMovie(event.target.value) };
     return (
         <nav className='navbar navbar-expand-lg navbar-light bg-light'>
             <div className="container-fluid">
