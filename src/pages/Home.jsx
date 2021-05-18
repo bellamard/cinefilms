@@ -76,10 +76,11 @@ function Home(props) {
 
     const setCardContent = topRated.map((item, index) => {
         return (
-            <Link to={`detail/${item.id}`} className="cardbox">
+            <Link to={`detail/${item.id}`} className="cardbox text-decoration-none">
                 <div className="card" key={index}>
 
                     <img src={item.backPoster} alt={item.title} className="cardImg" />
+                    <h3 className='p-1 titlecard'>{item.title}</h3>
                     <div className="descriptions">
                         <h3>{item.title}</h3>
                         <p>

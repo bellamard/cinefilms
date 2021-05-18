@@ -10,12 +10,14 @@ const MovieDetail = ({ match }) => {
     const [trailler, setTrailler] = useState('');
     const [Similar, setSimilar] = useState([]);
     const [movie, setMovie] = useState(params.id);
+    const [viewProfil, setViewProfil]= useState({});
     useEffect(() => {
         const fetchAPI = async () => {
             setDetail(await fetchMovieDetail(movie));
             setCasting(await fetchCasts(movie));
             setSimilar(await fetchSimilarMovie(movie));
             setTrailler(await fetchMovieVideos(movie));
+            
         };
         fetchAPI();
     }, [movie]);
@@ -33,18 +35,20 @@ const MovieDetail = ({ match }) => {
             );
         });
     }
-    const handleCastClick=(name, image, character)=>{
-
+    const handleCastClick = (key) => {
+        setViewProfil(casting[key]);
     }
-    const castList = casting.map((acteur, index) => {
+    
+    const castList = casting.slice(0, 20).map((acteur, index) => {
+       
         return (
             <div>
                 <li className="list-inline-item my-1" key={index}>
                     <button
                         type="button"
                         className="btn btn-outline-info mx-1"
-                        onClick={()=>{
-                            handleCastClick(acteur.name, acteur.img, acteur.character)
+                        onClick={() => {
+                            handleCastClick(index)
                         }}
                     >
                         {acteur.name}
@@ -72,11 +76,22 @@ const MovieDetail = ({ match }) => {
 
                 </div>
             </div>
-            <div col w-100 d-flex>
-                <h3 className='text-white'>Acteur</h3>
-                <ul>
-                    {castList}
-                </ul>
+            <h3 className='text-white'>Acteur</h3>
+            <div className='col w-100 d-flex text-center'>
+
+                <div className='text-white w-25'>
+                    <img src={viewProfil.img} alt='test' className='w-100'/>
+                    <h4>{viewProfil.name }</h4>
+                    <h4>{viewProfil.character }</h4>
+                </div>
+                <div className='w-75'>
+                    <ul>
+                        {castList}
+                        <li className='text-white'>...</li>
+                    </ul>
+                    
+                </div>
+
             </div>
         </div>
     );
