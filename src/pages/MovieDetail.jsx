@@ -10,17 +10,17 @@ const MovieDetail = ({ match }) => {
     const [trailler, setTrailler] = useState('');
     const [Similar, setSimilar] = useState([]);
     const [movie, setMovie] = useState(params.id);
-    const [viewProfil, setViewProfil]= useState({});
+    const [viewProfil, setViewProfil] = useState({});
     useEffect(() => {
         const fetchAPI = async () => {
             setDetail(await fetchMovieDetail(movie));
             setCasting(await fetchCasts(movie));
             setSimilar(await fetchSimilarMovie(movie));
             setTrailler(await fetchMovieVideos(movie));
-            
+
         };
         fetchAPI();
-    }, [movie]);
+    }, [movie, viewProfil]);
     let posterUrl = 'https://image.tmdb.org/t/p/original' + detail.backdrop_path;
     let genres = detail.genres;
     let genresType;
@@ -38,9 +38,9 @@ const MovieDetail = ({ match }) => {
     const handleCastClick = (key) => {
         setViewProfil(casting[key]);
     }
-    
+
     const castList = casting.slice(0, 20).map((acteur, index) => {
-       
+
         return (
             <div>
                 <li className="list-inline-item my-1" key={index}>
@@ -78,18 +78,28 @@ const MovieDetail = ({ match }) => {
             </div>
             <h3 className='text-white'>Acteur</h3>
             <div className='col w-100 d-flex text-center'>
+                {viewProfil.img ? (
+                    <div className='text-white w-25'>
+                        <img src={viewProfil.img} alt='test' className='w-100' />
+                        <h4>{viewProfil.name}</h4>
+                        <h4>{viewProfil.character}</h4>
+                    </div>
+                ) : (
+                    <div className="sk-folding-cube">
+                        <div className="sk-cube1 sk-cube"></div>
+                        <div className="sk-cube2 sk-cube"></div>
+                        <div className="sk-cube4 sk-cube"></div>
+                        <div className="sk-cube3 sk-cube"></div>
+                    </div>
+                )}
 
-                <div className='text-white w-25'>
-                    <img src={viewProfil.img} alt='test' className='w-100'/>
-                    <h4>{viewProfil.name }</h4>
-                    <h4>{viewProfil.character }</h4>
-                </div>
+
                 <div className='w-75'>
                     <ul>
                         {castList}
-                        <li className='text-white'>...</li>
+                        <li className='text-white text-end'>...</li>
                     </ul>
-                    
+
                 </div>
 
             </div>

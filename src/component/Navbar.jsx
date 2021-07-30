@@ -11,7 +11,7 @@ function Navbar(props) {
     }
     const handleChange = event => { setMovie(event.target.value) };
     return (
-        <nav className='navbar navbar-expand-lg navbar-light bg-light'>
+        <nav className='navbar navbar-expand-lg navbar-light bg-light '>
             <div className="container-fluid">
                 <div className='collapse navbar-collapse'>
                     <h1 className="navbar-brand">TOSALA FILMS</h1>
