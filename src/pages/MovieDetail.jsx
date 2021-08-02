@@ -12,7 +12,7 @@ import {
 const MovieDetail = ({ match }) => {
   const [detail, setDetail] = useState([]);
   const [casting, setCasting] = useState([]);
-  const [trailler, setTrailler] = useState("");
+  //const [trailler, setTrailler] = useState("");
   const [Similar, setSimilar] = useState([]);
   const [movie, setMovie] = useState(match.params.id);
   const [viewProfil, setViewProfil] = useState({});
@@ -22,7 +22,6 @@ const MovieDetail = ({ match }) => {
       setDetail(await fetchMovieDetail(movie));
       setCasting(await fetchCasts(movie));
       setSimilar(await fetchSimilarMovie(movie));
-      setTrailler(await fetchMovieVideos(movie));
     };
     fetchAPI();
   }, []);
