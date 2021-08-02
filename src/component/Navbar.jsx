@@ -19,7 +19,7 @@ function Navbar(props) {
           <h1 className="navbar-brand">
             {" "}
             <Link to="/" className="nav-link">
-              TOSALA FILMS
+              TOSALA FILM
             </Link>
           </h1>
         </div>
